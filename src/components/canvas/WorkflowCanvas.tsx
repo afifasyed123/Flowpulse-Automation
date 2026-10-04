@@ -85,7 +85,7 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
   );
 
   return (
-    <div className="flex-1 h-full w-full relative bg-slate-950" ref={reactFlowWrapper}>
+    <div className="flex-1 h-full w-full relative bg-[#070a13]" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -103,7 +103,7 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         snapGrid={[15, 15]}
         defaultEdgeOptions={{
           animated: true,
-          style: { stroke: '#6366f1', strokeWidth: 2 },
+          style: { stroke: '#8b5cf6', strokeWidth: 2 },
         }}
         className="touch-none"
       >
@@ -111,24 +111,24 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         <Background
           variant={BackgroundVariant.Dots}
           gap={20}
-          size={1.5}
-          color="#334155"
-          className="opacity-40"
+          size={1.2}
+          color="#1e293b"
+          className="opacity-50"
         />
 
         {/* MiniMap */}
         <MiniMap
           nodeColor={(node) => {
             const n = node as Node<BaseNodeData>;
-            if (n.data?.category === 'trigger') return '#a855f7';
+            if (n.data?.category === 'trigger') return '#8b5cf6';
             if (n.data?.category === 'condition') return '#f59e0b';
             if (n.data?.category === 'transform') return '#10b981';
             if (n.data?.category === 'ai') return '#ec4899';
-            return '#3b82f6';
+            return '#06b6d4';
           }}
-          maskColor="rgba(15, 23, 42, 0.7)"
+          maskColor="rgba(7, 10, 19, 0.75)"
           position="bottom-left"
-          className="!m-4 !border-slate-800 shadow-2xl"
+          className="!m-4 !border-slate-800 shadow-2xl !bg-[#0b0f1a]"
           zoomable
           pannable
         />
@@ -136,23 +136,23 @@ export const WorkflowCanvas: React.FC<WorkflowCanvasProps> = ({
         {/* Floating Canvas Controls */}
         <Controls
           position="bottom-left"
-          className="!m-4 !mb-40 !border-slate-800 shadow-2xl"
+          className="!m-4 !mb-40 !border-slate-800 shadow-2xl !bg-[#0b0f1a]"
           showInteractive={false}
         />
 
-        {/* Bottom Legend Overlay */}
+        {/* Top-Right Legend Overlay */}
         <Panel position="top-right" className="!m-4">
-          <div className="flex items-center gap-3 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-800 shadow-lg text-[11px] text-slate-400">
-            <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-purple-400" /> Trigger
+          <div className="flex items-center gap-3 bg-[#0b0f1a]/85 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-800 shadow-lg text-[11px] text-slate-300">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-violet-400" /> Trigger
             </div>
-            <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-blue-400" /> Action
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-cyan-400" /> Action
             </div>
-            <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-amber-400" /> Condition
+            <div className="flex items-center gap-1.5">
+              <span className="w-2 h-2 rounded-full bg-amber-400" /> Logic
             </div>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-pink-400" /> AI
             </div>
           </div>

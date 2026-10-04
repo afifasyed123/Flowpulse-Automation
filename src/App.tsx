@@ -45,6 +45,7 @@ export const App: React.FC = () => {
   const [executionRecord, setExecutionRecord] = useState<ExecutionRecord | null>(null);
   const [showLogsDrawer, setShowLogsDrawer] = useState<boolean>(false);
   const [executionHistory, setExecutionHistory] = useState<ExecutionRecord[]>([]);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Modals state
   const [isTemplatesOpen, setIsTemplatesOpen] = useState(false);
@@ -55,6 +56,11 @@ export const App: React.FC = () => {
   const [hasSaved, setHasSaved] = useState(false);
 
   const activeExecutorRef = useRef<WorkflowExecutor | null>(null);
+
+  const showToast = (msg: string) => {
+    setToastMessage(msg);
+    setTimeout(() => setToastMessage(null), 3500);
+  };
 
   // Load saved workflow or history from LocalStorage
   useEffect(() => {
@@ -92,7 +98,7 @@ export const App: React.FC = () => {
           {
             ...params,
             animated: true,
-            style: { stroke: '#6366f1', strokeWidth: 2 },
+            style: { stroke: '#8b5cf6', strokeWidth: 2 },
           },
           eds
         )
@@ -224,6 +230,12 @@ export const App: React.FC = () => {
   const handleRunWorkflow = async (customPayload?: any) => {
     if (isRunning) return;
 
+    // Check if canvas is empty
+    if (!nodes || nodes.length === 0) {
+      showToast('Canvas is empty. Drag blocks from the palette or choose a template to run.');
+      return;
+    }
+
     setIsRunning(true);
     setIsPaused(false);
     setShowLogsDrawer(true);
@@ -315,12 +327,13 @@ export const App: React.FC = () => {
         // Ignore storage error
       }
 
-      if (record.status === 'success') {
+      // ONLY celebrate if execution actually succeeded AND executed at least 1 step!
+      if (record.status === 'success' && record.stepLogs && record.stepLogs.length > 0) {
         confetti({
           particleCount: 80,
           spread: 70,
           origin: { y: 0.6 },
-          colors: ['#6366f1', '#10b981', '#ec4899', '#f59e0b'],
+          colors: ['#8b5cf6', '#10b981', '#06b6d4', '#f59e0b'],
         });
       }
     } catch (err: any) {
@@ -378,6 +391,7 @@ export const App: React.FC = () => {
     };
     localStorage.setItem('flowpulse_saved_workflow', JSON.stringify(currentWf));
     setHasSaved(true);
+    showToast('Workflow saved successfully.');
     setTimeout(() => setHasSaved(false), 2000);
   };
 
@@ -425,6 +439,7 @@ export const App: React.FC = () => {
           setEdges(parsed.edges);
           setSelectedNodeId(null);
           setTimeout(() => reactFlowInstance?.fitView({ padding: 0.2 }), 100);
+          showToast('Workflow imported successfully.');
         }
       } catch (err: any) {
         alert('Invalid workflow JSON file: ' + err.message);
@@ -436,19 +451,28 @@ export const App: React.FC = () => {
 
   // Reset / Clear Canvas
   const handleClearCanvas = () => {
+    if (nodes.length === 0) return;
     if (window.confirm('Clear all blocks from the canvas?')) {
       setNodes([]);
       setEdges([]);
       setSelectedNodeId(null);
       setExecutionRecord(null);
       setShowLogsDrawer(false);
+      showToast('Canvas cleared.');
     }
   };
 
   const selectedNode = nodes.find((n) => n.id === selectedNodeId) || null;
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-slate-950 font-sans">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#070a13] font-sans">
+      {/* Toast Alert */}
+      {toastMessage && (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 px-4 py-2 rounded-xl bg-slate-900/95 border border-slate-700 text-xs font-medium text-slate-200 shadow-2xl backdrop-blur-xl animate-in fade-in slide-in-from-top-2">
+          {toastMessage}
+        </div>
+      )}
+
       {/* Top Navbar */}
       <TopNavbar
         workflowName={workflowName}

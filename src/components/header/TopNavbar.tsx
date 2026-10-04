@@ -49,14 +49,14 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
   hasSaved,
 }) => {
   return (
-    <header className="h-14 bg-slate-900/95 backdrop-blur-xl border-b border-slate-800 px-4 flex items-center justify-between text-slate-200 z-20 select-none">
+    <header className="h-14 bg-[#080c16]/95 backdrop-blur-xl border-b border-slate-800/80 px-4 flex items-center justify-between text-slate-200 z-20 select-none">
       {/* Brand & Workflow Title */}
       <div className="flex items-center gap-4 min-w-0">
         <div className="flex items-center gap-2.5">
-          <div className="p-1.5 rounded-lg bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 shadow-md">
+          <div className="p-1.5 rounded-lg bg-gradient-to-tr from-violet-600 via-indigo-600 to-cyan-500 shadow-md">
             <Workflow className="w-5 h-5 text-white" />
           </div>
-          <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-300 bg-clip-text text-transparent hidden sm:inline">
+          <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-violet-300 via-indigo-200 to-cyan-300 bg-clip-text text-transparent hidden sm:inline">
             FlowPulse
           </span>
         </div>
@@ -69,7 +69,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
             type="text"
             value={workflowName}
             onChange={(e) => onWorkflowNameChange(e.target.value)}
-            className="text-sm font-semibold bg-transparent hover:bg-slate-800/60 focus:bg-slate-800/80 px-2 py-1 rounded-lg border border-transparent focus:border-indigo-500 text-slate-100 focus:outline-none transition-colors truncate"
+            className="text-sm font-semibold bg-transparent hover:bg-slate-850 focus:bg-slate-900 px-2 py-1 rounded-lg border border-transparent focus:border-violet-500/80 text-slate-100 focus:outline-none transition-colors truncate"
             title="Click to rename workflow"
           />
         </div>
@@ -79,25 +79,25 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
       <div className="flex items-center gap-1.5">
         <button
           onClick={onOpenTemplates}
-          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-200 border border-slate-700/60 transition-all shadow-sm"
+          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-800 hover:border-slate-700 transition-all shadow-sm"
         >
-          <Layers className="w-3.5 h-3.5 text-indigo-400" />
+          <Layers className="w-3.5 h-3.5 text-violet-400" />
           <span className="hidden md:inline">Templates</span>
         </button>
 
         <button
           onClick={onOpenAiGenerator}
-          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-pink-500/10 hover:bg-pink-500/20 text-pink-300 border border-pink-500/30 transition-all shadow-sm"
+          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-violet-500/10 hover:bg-violet-500/20 text-violet-300 border border-violet-500/30 transition-all shadow-sm"
         >
-          <Sparkles className="w-3.5 h-3.5 text-pink-400" />
+          <Sparkles className="w-3.5 h-3.5 text-violet-400" />
           <span className="hidden md:inline">AI Builder</span>
         </button>
 
         <button
           onClick={onOpenWebhookTester}
-          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 transition-all shadow-sm"
+          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 transition-all shadow-sm"
         >
-          <Globe className="w-3.5 h-3.5 text-purple-400" />
+          <Globe className="w-3.5 h-3.5 text-cyan-400" />
           <span className="hidden md:inline">Webhook Test</span>
         </button>
       </div>
@@ -107,7 +107,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         <button
           onClick={onOpenHistory}
           title="Execution History Timeline"
-          className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-all"
+          className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all"
         >
           <History className="w-4 h-4" />
         </button>
@@ -115,7 +115,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         <button
           onClick={onOpenAnalytics}
           title="Workflow Metrics & Analytics"
-          className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-all"
+          className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all"
         >
           <BarChart3 className="w-4 h-4" />
         </button>
@@ -125,7 +125,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         {/* Save & Export */}
         <button
           onClick={onSaveWorkflow}
-          className="flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-slate-800/60 hover:bg-slate-700 text-slate-300 border border-slate-700/60 transition-all"
+          className="flex items-center gap-1 text-xs font-medium px-2.5 py-1.5 rounded-lg bg-slate-900/70 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-all"
           title="Save to Local Storage"
         >
           {hasSaved ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Save className="w-3.5 h-3.5 text-slate-400" />}
@@ -134,14 +134,14 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
 
         <button
           onClick={onExportWorkflow}
-          className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 transition-all"
+          className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition-all"
           title="Export Workflow JSON"
         >
           <Download className="w-3.5 h-3.5" />
         </button>
 
         <label
-          className="p-2 rounded-lg bg-slate-800/60 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/60 cursor-pointer transition-all"
+          className="p-2 rounded-lg bg-slate-900/70 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 cursor-pointer transition-all"
           title="Import Workflow JSON"
         >
           <Upload className="w-3.5 h-3.5" />
@@ -150,8 +150,8 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
 
         <button
           onClick={onClearCanvas}
-          className="p-2 rounded-lg bg-slate-800/60 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 border border-slate-700/60 transition-all"
-          title="Reset / Clear Canvas"
+          className="p-2 rounded-lg bg-slate-900/70 hover:bg-rose-950/40 text-slate-400 hover:text-rose-400 border border-slate-800 transition-all"
+          title="Clear Canvas"
         >
           <RotateCcw className="w-3.5 h-3.5" />
         </button>
@@ -160,16 +160,16 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
         <button
           onClick={onRunWorkflow}
           disabled={isRunning}
-          className="flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 disabled:opacity-60 text-slate-950 font-bold text-xs px-4 py-2 rounded-lg shadow-lg shadow-emerald-900/30 transition-all active:scale-95"
+          className="flex items-center gap-2 bg-gradient-to-r from-violet-600 via-indigo-600 to-teal-500 hover:from-violet-500 hover:to-teal-400 disabled:opacity-50 text-white font-bold text-xs px-4 py-2 rounded-lg shadow-lg shadow-violet-950/50 transition-all active:scale-95"
           title="Run full workflow (Ctrl + Enter)"
         >
           {isRunning ? (
             <>
-              <Loader2 className="w-4 h-4 animate-spin text-slate-950" /> Running...
+              <Loader2 className="w-4 h-4 animate-spin text-white" /> Running...
             </>
           ) : (
             <>
-              <Play className="w-4 h-4 fill-slate-950 text-slate-950" /> Run Workflow
+              <Play className="w-4 h-4 fill-white text-white" /> Run Workflow
             </>
           )}
         </button>

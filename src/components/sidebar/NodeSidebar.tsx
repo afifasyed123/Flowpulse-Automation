@@ -96,9 +96,9 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   // Actions
   {
     type: 'action_http',
-    label: 'HTTP / REST API Request',
+    label: 'HTTP REST API Request',
     category: 'action',
-    description: 'Dispatch GET, POST, PUT, DELETE requests with headers & dynamic payload.',
+    description: 'Dispatch GET, POST, PUT, DELETE requests with headers and dynamic payload.',
     icon: Globe,
     defaultConfig: {
       url: 'https://jsonplaceholder.typicode.com/posts/1',
@@ -110,7 +110,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   },
   {
     type: 'action_code',
-    label: 'JavaScript Code Sandbox',
+    label: 'JavaScript Sandbox',
     category: 'action',
     description: 'Execute custom JavaScript logic with input parameters and sandbox console.',
     icon: Code,
@@ -135,7 +135,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   },
   {
     type: 'action_ai',
-    label: 'AI / LLM Intelligence',
+    label: 'AI Intelligence Processor',
     category: 'ai',
     description: 'Run AI sentiment analysis, customer ticket triage, entity extraction, or summarization.',
     icon: Sparkles,
@@ -158,7 +158,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   },
   {
     type: 'action_kv_store',
-    label: 'Database / Key-Value Store',
+    label: 'Database Key-Value Store',
     category: 'action',
     description: 'Store, retrieve, or increment state values across workflow executions.',
     icon: Database,
@@ -170,7 +170,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   },
   {
     type: 'action_delay',
-    label: 'Asynchronous Delay / Timer',
+    label: 'Asynchronous Delay Timer',
     category: 'action',
     description: 'Pause execution for X seconds before resuming next downstream step.',
     icon: Timer,
@@ -193,7 +193,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   // Conditions & Logic
   {
     type: 'condition_if_else',
-    label: 'If / Else Condition Router',
+    label: 'If / Else Router',
     category: 'condition',
     description: 'Branch workflow into True / False paths based on rule evaluations.',
     icon: GitBranch,
@@ -205,7 +205,7 @@ export const AVAILABLE_NODES: NodeDefinition[] = [
   },
   {
     type: 'condition_switch',
-    label: 'Multi-Branch Switch Router',
+    label: 'Multi-Branch Switch',
     category: 'condition',
     description: 'Match a variable against multiple custom case strings.',
     icon: Split,
@@ -251,27 +251,27 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ onAddNode }) => {
     return matchesSearch && matchesCategory;
   });
 
-  const categories = [
-    { id: 'all', label: 'All Blocks' },
-    { id: 'trigger', label: '⚡ Triggers' },
-    { id: 'action', label: '🚀 Actions' },
-    { id: 'condition', label: '🔀 Logic' },
-    { id: 'transform', label: '📊 Transform' },
-    { id: 'ai', label: '✨ AI' },
+  const categories: Array<{ id: string; label: string; icon: React.ComponentType<{ className?: string }> }> = [
+    { id: 'all', label: 'All', icon: FolderTree },
+    { id: 'trigger', label: 'Triggers', icon: Zap },
+    { id: 'action', label: 'Actions', icon: Globe },
+    { id: 'condition', label: 'Logic', icon: GitBranch },
+    { id: 'transform', label: 'Transform', icon: Layers },
+    { id: 'ai', label: 'AI', icon: Sparkles },
   ];
 
   return (
-    <aside className="w-80 h-full flex flex-col bg-slate-900/95 border-r border-slate-800 text-slate-200 z-10 select-none">
+    <aside className="w-80 h-full flex flex-col bg-[#0b0f19] border-r border-slate-800/80 text-slate-200 z-10 select-none">
       {/* Sidebar Header */}
-      <div className="p-4 border-b border-slate-800/80 bg-slate-950/40">
+      <div className="p-4 border-b border-slate-800/70 bg-[#070a12]">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <FolderTree className="w-4 h-4 text-indigo-400" />
+            <FolderTree className="w-4 h-4 text-violet-400" />
             <span className="text-xs font-semibold uppercase tracking-wider text-slate-300">
               Block Palette
             </span>
           </div>
-          <span className="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full font-mono">
+          <span className="text-[11px] bg-slate-800/80 text-slate-400 px-2.5 py-0.5 rounded-full font-mono">
             {filteredNodes.length} blocks
           </span>
         </div>
@@ -284,26 +284,31 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ onAddNode }) => {
             placeholder="Search triggers, actions, AI..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-950/80 border border-slate-700/80 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
+            className="w-full bg-slate-900/90 border border-slate-800 rounded-lg pl-9 pr-3 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-violet-500 transition-colors"
           />
         </div>
       </div>
 
-      {/* Category Pills */}
-      <div className="flex items-center gap-1 p-2 border-b border-slate-800/60 overflow-x-auto no-scrollbar">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setActiveCategory(cat.id)}
-            className={`px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-all ${
-              activeCategory === cat.id
-                ? 'bg-indigo-600/30 text-indigo-300 border border-indigo-500/40'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
+      {/* Category Tabs (No emojis, clean icons) */}
+      <div className="flex items-center gap-1.5 p-2 border-b border-slate-800/60 overflow-x-auto no-scrollbar bg-[#080c16]">
+        {categories.map((cat) => {
+          const CatIcon = cat.icon;
+          const isActive = activeCategory === cat.id;
+          return (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium whitespace-nowrap transition-all ${
+                isActive
+                  ? 'bg-violet-600/20 text-violet-300 border border-violet-500/40 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40 border border-transparent'
+              }`}
+            >
+              <CatIcon className="w-3 h-3" />
+              <span>{cat.label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Node List */}
@@ -315,11 +320,11 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ onAddNode }) => {
               key={node.type}
               draggable
               onDragStart={(e) => onDragStart(e, node)}
-              className="group relative p-3 rounded-xl bg-slate-950/50 hover:bg-slate-800/60 border border-slate-800/80 hover:border-indigo-500/50 cursor-grab active:cursor-grabbing transition-all duration-150 shadow-sm hover:shadow-md"
+              className="group relative p-3 rounded-xl bg-slate-900/50 hover:bg-slate-800/70 border border-slate-800/80 hover:border-violet-500/50 cursor-grab active:cursor-grabbing transition-all duration-150 shadow-sm hover:shadow-md"
             >
               <div className="flex items-start justify-between gap-2">
                 <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-indigo-400 group-hover:text-indigo-300 group-hover:scale-105 transition-all">
+                  <div className="p-2 rounded-lg bg-[#070a12] border border-slate-800 text-violet-400 group-hover:text-violet-300 group-hover:border-violet-500/30 transition-all">
                     <IconComp className="w-4 h-4" />
                   </div>
                   <div>
@@ -335,7 +340,7 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ onAddNode }) => {
                 <button
                   onClick={() => onAddNode(node.type, node.defaultConfig, node.label, node.category)}
                   title="Add to Canvas"
-                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg bg-indigo-600/20 hover:bg-indigo-600/40 text-indigo-300 border border-indigo-500/30 transition-all"
+                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg bg-violet-600/20 hover:bg-violet-600/40 text-violet-300 border border-violet-500/30 transition-all"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -356,8 +361,8 @@ export const NodeSidebar: React.FC<NodeSidebarProps> = ({ onAddNode }) => {
       </div>
 
       {/* Sidebar Footer Hint */}
-      <div className="p-3 border-t border-slate-800/80 bg-slate-950/60 text-[11px] text-slate-400 flex items-center gap-2">
-        <HelpCircle className="w-3.5 h-3.5 text-indigo-400 flex-shrink-0" />
+      <div className="p-3 border-t border-slate-800/80 bg-[#070a12] text-[11px] text-slate-400 flex items-center gap-2">
+        <HelpCircle className="w-3.5 h-3.5 text-violet-400 flex-shrink-0" />
         <span>Drag blocks onto canvas or click (+) to insert.</span>
       </div>
     </aside>

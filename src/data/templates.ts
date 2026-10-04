@@ -69,13 +69,13 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplate[] = [
         type: 'customNode',
         position: { x: 1080, y: 120 },
         data: {
-          label: '🚨 Alert VIP Sales Channel',
+          label: 'Alert VIP Sales Channel',
           type: 'action_notification',
           category: 'action',
           config: {
             channel: 'Slack #enterprise-deals',
-            subject: '⭐ HIGH VALUE LEAD SIGNUP',
-            message: '🎉 Hot VIP lead registered: {{trigger.email}} (Budget: ${{trigger.annualBudget}}). Assigned to Enterprise AE!',
+            subject: 'HIGH VALUE LEAD SIGNUP',
+            message: 'Hot VIP lead registered: {{trigger.email}} (Budget: ${{trigger.annualBudget}}). Assigned to Enterprise AE.',
           },
         },
       },
@@ -209,7 +209,7 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplate[] = [
         type: 'customNode',
         position: { x: 1420, y: 320 },
         data: {
-          label: '🚨 PagerDuty Emergency Alert',
+          label: 'PagerDuty Emergency Alert',
           type: 'action_notification',
           category: 'action',
           config: {
@@ -289,13 +289,13 @@ export const WORKFLOW_TEMPLATES: WorkflowTemplate[] = [
         type: 'customNode',
         position: { x: 1100, y: 120 },
         data: {
-          label: '🔥 Escalate to Tier-3 Incident Team',
+          label: 'Escalate to Tier-3 Incident Team',
           type: 'action_notification',
           category: 'action',
           config: {
             channel: 'Slack #urgent-escalations',
             subject: 'URGENT CUSTOMER CHURN RISK',
-            message: '⚠️ High severity ticket from {{trigger.customerEmail}}: "{{trigger.feedbackText}}". Auto-assigned to On-Call Lead!',
+            message: 'High severity ticket from {{trigger.customerEmail}}: "{{trigger.feedbackText}}". Auto-assigned to On-Call Lead.',
           },
         },
       },

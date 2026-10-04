@@ -79,6 +79,25 @@ export class WorkflowExecutor {
     const startTime = Date.now();
     const executionId = 'exec_' + Math.random().toString(36).substring(2, 9);
     
+    // Check if graph is completely empty
+    if (!this.graph.nodes || this.graph.nodes.length === 0) {
+      const emptyRecord: ExecutionRecord = {
+        id: executionId,
+        workflowId: 'wf_empty',
+        workflowName: 'Empty Canvas',
+        triggerType: 'trigger_manual',
+        status: 'error',
+        startedAt: new Date(startTime).toISOString(),
+        finishedAt: new Date().toISOString(),
+        durationMs: 0,
+        triggerPayload: null,
+        stepLogs: [],
+        errorMessage: 'Canvas is empty. Add blocks from the palette or choose a template to execute.',
+      };
+      this.options.onWorkflowComplete?.(emptyRecord);
+      return emptyRecord;
+    }
+
     // Find trigger node (or root nodes with no incoming edges)
     const incomingEdgeCount: Record<string, number> = {};
     this.graph.nodes.forEach((n) => {
@@ -291,7 +310,7 @@ export class WorkflowExecutor {
         return lastLog;
       }
       if (attempt < maxRetries) {
-        lastLog.logs.push(`⚠️ Attempt ${attempt} failed. Retrying in ${retryDelay}ms...`);
+        lastLog.logs.push(`Attempt ${attempt} failed. Retrying in ${retryDelay}ms...`);
         await this.sleep(retryDelay);
       }
     }
@@ -489,7 +508,7 @@ export class WorkflowExecutor {
 
         // --- KEY-VALUE STORE ---
         case 'action_kv_store': {
-          const operation = resolvedConfig.operation || 'get';
+          const operation = resolvedConfig.operation || 'set';
           const key = resolvedConfig.key || 'counter.global';
           const value = resolvedConfig.value;
 
@@ -580,7 +599,7 @@ export class WorkflowExecutor {
               conditionPassed = Boolean(leftValue);
           }
 
-          logFn(`Condition evaluation result: ${conditionPassed ? '✅ TRUE (Path A)' : '❌ FALSE (Path B)'}`);
+          logFn(`Condition evaluation result: ${conditionPassed ? 'TRUE (Path A)' : 'FALSE (Path B)'}`);
           outputData = {
             conditionPassed,
             branch: conditionPassed ? 'true' : 'false',
@@ -642,7 +661,7 @@ export class WorkflowExecutor {
     } catch (err: any) {
       const durationMs = Date.now() - startTime;
       const errorMsg = err.message || 'Unknown node execution error';
-      logFn(`❌ Error: ${errorMsg}`);
+      logFn(`Error: ${errorMsg}`);
 
       return {
         nodeId: node.id,
